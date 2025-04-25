@@ -55,40 +55,45 @@ Socket programming finds applications in various domains, including web developm
 
 ### Programs:
 
-### Client:
-```import socket
-s = socket.socket()
-s.bind(('localhost', 8000))
-s.listen(5)
-print("Server is listening on port 8000...")
-c, addr = s.accept()
-print(f"Connected to {addr}")
-while True:
-    i = input("Enter a data: ")
-    c.send(i.encode())
-    ack = c.recv(1024).decode()
-    if ack: 
-        print(ack)
-    else:
-        c.close()
-        break
+CLIENT
 ```
-### Server:
+import socket
+from datetime import datetime
+s=socket.socket()
+s.bind(('localhost',8000))
+s.listen(5)
+c,addr=s.accept()
+print("Client Address : ",addr)
+now = datetime.now()
+c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
+ack=c.recv(1024).decode()
+if ack:
+    print(ack)
+c.close()
+```
+ SERVER
 ```
 import socket
 s=socket.socket()
 s.connect(('localhost',8000))
-while True:
- print(s.recv(1024).decode())
- s.send("Acknowledgement Recived".encode())
+print(s.getsockname())
+print(s.recv(1024).decode())
+s.send("acknowledgement recived from the server".encode())
 ```
 
 ### Output:
-### Client:
-![Screenshot 2025-03-27 170215](https://github.com/user-attachments/assets/8768de79-b65a-4e75-8fd5-72481dd05842)
 
-### Server:
-![Screenshot 2025-03-27 170122](https://github.com/user-attachments/assets/0af741c7-d837-4472-8fb9-108def8133a2)
+ CLIENT
+
+ ![Screenshot 2025-04-25 082720](https://github.com/user-attachments/assets/bee87399-7553-4617-a339-a2449aa1c9f2)
+
+
+ SERVER
+
+ ![Screenshot 2025-04-25 082734](https://github.com/user-attachments/assets/a9af1fef-bd31-43cf-bcf3-ba1b77a06dc8)
+
+
+
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully.
